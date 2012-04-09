@@ -1,0 +1,24 @@
+@CHARSET "ISO-8859-1";
+
+H1 {
+	
+	background-color: white;
+	
+}
+H2 {
+	
+	background-color: yellow;
+	
+}
+
+
+
+
+body {
+	background-color: lightblue;
+	text-align: center;
+	margin: 10;
+	border: 35
+	
+	
+}
