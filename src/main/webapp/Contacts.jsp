@@ -6,34 +6,37 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<jsp:useBean id="cont" class="dm.it.cloudapp.ContactsStore" scope="session"></jsp:useBean>
+<jsp:useBean id="cont" class="dm.it.cloudapp.ContactsStore" scope="application"></jsp:useBean>
 <head>
-
-
 <link rel="stylesheet" href = "styles/style.css" >
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Derry's Contacts</title>
 </head>
 
 <body>
-<h1>Contacts List model 2</h1>
+<h1>Contacts List</h1>
 <h2>List of my contacts</h2>
-<c:choose>
-
-<c:when test="${ !empty param.first||!empty param.sur}">
-
-		
-			hello
-			</c:when>
-			<c:otherwise>
-		
-			 	""
-			</c:otherwise>
-
-</c:choose>
 
 
-<c:forEach items="${contacts}" var ="contact" varStatus ="row">
+
+
+<c:if test="${ !empty param.first||!empty param.sur}">
+<% 
+ Contact contact = new Contact();
+ contact.setFname(request.getParameter("first"));
+ contact.setSname(request.getParameter("sur"));
+ contact.setAddrLn1(request.getParameter("ln1"));
+ contact.setAddrLn2(request.getParameter("ln2"));
+ contact.setAddrLn3(request.getParameter("ln3"));
+ contact.setPhNo(request.getParameter("mobile"));
+ cont.addContacts(contact);
+
+%>
+</c:if>
+
+
+
+<c:forEach items="${cont.contacts}" var ="contact">
 
 
 ${contact.fname}
@@ -45,22 +48,11 @@ ${contact.addrLn2}
 ${contact.addrLn3}
 ${contact.phNo}
 
-		<form method="post">
-			<input name="_method" type="hidden" value="put"> 
-			<input name="contId" type="hidden" value="${row.count}"> 
-			<input type="submit" value="Update">
-		</form>
-		<form method="post">
-			<input name="_method" type="hidden" value="delete"> 
-			<input name="contId" type="hidden" value="${row.count}"> 
-			<input type="submit" value="Delete">
-		</form>
-
 </c:forEach>
 
 
 <h2>Create New Contact</h2>
-<form method="post" >
+<form>
 
 
 First Name:<input name="first">

@@ -16,24 +16,29 @@
 </head>
 
 <body>
-<h1>Contacts List model 2</h1>
+<h1>Contacts List</h1>
 <h2>List of my contacts</h2>
-<c:choose>
-
-<c:when test="${ !empty param.first||!empty param.sur}">
-
-		
-			hello
-			</c:when>
-			<c:otherwise>
-		
-			 	""
-			</c:otherwise>
-
-</c:choose>
 
 
-<c:forEach items="${contacts}" var ="contact" varStatus ="row">
+
+
+<c:if test="${ !empty param.first||!empty param.sur}">
+<% 
+ Contact contact = new Contact();
+ contact.setFname(request.getParameter("first"));
+ contact.setSname(request.getParameter("sur"));
+ contact.setAddrLn1(request.getParameter("ln1"));
+ contact.setAddrLn2(request.getParameter("ln2"));
+ contact.setAddrLn3(request.getParameter("ln3"));
+ contact.setPhNo(request.getParameter("mobile"));
+ cont.addContacts(contact);
+
+%>
+</c:if>
+
+
+
+<c:forEach items="${cont.contacts}" var ="contact">
 
 
 ${contact.fname}
@@ -60,7 +65,7 @@ ${contact.phNo}
 
 
 <h2>Create New Contact</h2>
-<form method="post" >
+<form>
 
 
 First Name:<input name="first">
