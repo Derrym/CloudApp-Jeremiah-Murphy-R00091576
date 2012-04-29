@@ -1,24 +1,22 @@
 package dm.it.cloudapp;
 
-import  java.util.ArrayList;
-import  java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactsStore {
-	private List<Contact> contacts = new ArrayList <Contact> ();
+	private List<Contact> contacts = new ArrayList<Contact>();
 
 	public List<Contact> getContacts() {
 		return contacts;
 	}
-	
-	public void addContacts(Contact contact)
-	{
+
+	public void addContacts(Contact contact) {
 		contacts.add(contact);
 	}
-	
-	
-	
-	
-	
-	
+
+	public void addatContacts(Contact contact, int index) {
+		contacts.add(index, contact);
+
+	}
 
 }

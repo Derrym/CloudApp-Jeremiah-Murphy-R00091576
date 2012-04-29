@@ -1,24 +1,78 @@
 @CHARSET "ISO-8859-1";
 
-H1 {
-	
-	background-color: white;
-	
+body,p,h1,h2,h3,h4,table,td,th,ul,ol,textarea,input {
+	font-family: verdana, helvetica, arial, sans-serif;
 }
-H2 {
-	
+
+h1 {
+	font-size: 190%;
+	margin-top: 0px;
+	font-weight: normal
+}
+
+h2 {
+	font-size: 160%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-weight: normal
+}
+
+h3 {
+	font-size: 120%;
+	font-weight: normal
+}
+
+h4 {
+	font-size: 100%;
+}
+
+h5 {
+	font-size: 90%;
+}
+
+h6 {
+	font-size: 80%;
+}
+
+h1,h2,h3,h4,h5,h6 {
 	background-color: yellow;
-	
+	color: black;
 }
-
-
-
 
 body {
-	background-color: lightblue;
+	color: black;
+	margin: 5;
+	padding: 60px;
 	text-align: center;
-	margin: 10;
-	border: 35
-	
-	
+	float: center;
+	background-color: light-blue;
+}
+
+div.ex {
+	padding: 10px;
+	border: 5px solid gray;
+	text-align: center;
+	position: left;
+	float: right;
+	leftmargin: 250px;
+}
+
+div.e {
+	text-align: center;
+	padding: 10px;
+	border: 1px solid gray;
+	margin: 0px;
+}
+
+div.est {
+	width: 50%;
+	padding: 2px;
+	border: 5px solid gray;
+	leftmargin: 10px; rightmargin 20px;
+	text-align: center;
+	float: left;
+}
+
+form {
+	text-align: left;
 }
