@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import dm.it.cloudapp.Contact;
-import dm.it.cloudapp.ContactsStore;
 import dm.it.cloudapp.JdbcContactsStore;
 
 @RequestMapping("contacts")

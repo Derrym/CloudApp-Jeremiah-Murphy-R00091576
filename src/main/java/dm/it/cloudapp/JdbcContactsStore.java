@@ -15,6 +15,10 @@ public class JdbcContactsStore {
 	public JdbcContactsStore(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
+	
+	private JdbcContactsStore(){
+		
+	}
 
 	public void save(Contact contact) {
 		jdbcTemplate
