@@ -8,7 +8,10 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 
+@Secured("ROLE_USER")
 public class JdbcContactsStore {
 	private JdbcTemplate jdbcTemplate;
 
@@ -22,36 +25,39 @@ public class JdbcContactsStore {
 
 	public void save(Contact contact) {
 		jdbcTemplate
-				.update("insert into CONTACT (first, sur, ln1,ln2,ln3,mobile) values(?,?,?,?,?,?)",
+				.update("insert into CONTACT (first, sur, ln1,ln2,ln3,mobile,owner)  values(?,?,?,?,?,?,?)",
 						contact.getFname(), contact.getSname(),
 						contact.getAddrLn1(), contact.getAddrLn2(),
-						contact.getAddrLn3(), contact.getPhNo());
+						contact.getAddrLn3(), contact.getPhNo(), getCurrentUser());
 	}
 
 	public Contact get(int id) {
 		return jdbcTemplate
 				.queryForObject(
-						"select id, first, sur, ln1,ln2,ln3,mobile from CONTACT where id=?",
-						new ContactMapper(), id);
+						"select id, first, sur, ln1,ln2,ln3,mobile from CONTACT where id=?and owner=?", 
+						new ContactMapper(), id,getCurrentUser());
 	}
 
 	public List<Contact> getAll() {
 		return jdbcTemplate.query(
-				"select id, first, sur, ln1,ln2,ln3,mobile from CONTACT",
-				new ContactMapper());
+				"select id, first, sur, ln1,ln2,ln3,mobile from CONTACT where owner=?",
+				new ContactMapper(),getCurrentUser());
 	}
 
 	public void delete(int id) {
-		jdbcTemplate.update("delete from CONTACT where id=?", id);
+		jdbcTemplate.update("delete from CONTACT where id=? and owner=?",  id,getCurrentUser());
 	}
-
 	public void update(Contact contact, int id) {
 		this.jdbcTemplate
-				.update("update CONTACT set first =?, sur=?,ln1=?,ln2=?,ln3=?,mobile=?  where id=?",
+				.update("update CONTACT set first =?, sur=?,ln1=?,ln2=?,ln3=?,mobile=?  where id=?and owner=?",
 						contact.getFname(), contact.getSname(),
 						contact.getAddrLn1(), contact.getAddrLn2(),
-						contact.getAddrLn3(), contact.getPhNo(), id);
+						contact.getAddrLn3(), contact.getPhNo(), id,getCurrentUser());
 	}
+	private String getCurrentUser() {
+		return SecurityContextHolder.getContext().getAuthentication().getName();
+	}
+
 }
 
 class ContactMapper implements RowMapper<Contact> {

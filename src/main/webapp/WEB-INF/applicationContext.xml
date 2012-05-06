@@ -16,15 +16,37 @@
 	</bean>
 
 
-	<jdbc:embedded-database type="H2" id="dataSource" />
+	
 
-	<jdbc:initialize-database data-source="dataSource">
+	<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
 		<jdbc:script location="classpath:db-schema.sql" />
 	</jdbc:initialize-database>
 
-	<bean class="org.h2.tools.Server" factory-method="createWebServer"
-		init-method="start" destroy-method="stop">
-		<constructor-arg value="-web,-webPort,8082" />
-	</bean>
 
+	<aop:aspectj-autoproxy />
+
+	<bean class="dm.it.cloudapp.TracingAspect" />
+
+
+	<security:http auto-config="true" >
+	<security:intercept-url pattern="/*.html" access= "ROLE_USER" />
+	</security:http>
+
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:password-encoder hash="md5" />
+			<security:user-service properties="classpath:user.properties" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<beans profile="cloud">
+		<cloud:data-source id="dataSource" service-name="contactDB" />
+	</beans>
+	<beans profile="default">
+		<jdbc:embedded-database type="H2" id="dataSource" />
+		<bean class="org.h2.tools.Server" factory-method="createWebServer"
+			init-method="start" destroy-method="stop">
+			<constructor-arg value="-web,-webPort,8082" />
+		</bean>
+	</beans>
 </beans>
